@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: payment-gateway-integration
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/payments}
+    username: ${DB_USER:payments}
+    password: ${DB_PASSWORD:payments}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: none
+  flyway:
+    enabled: true
+
+midtrans:
+  # Sandbox server key, e.g. SB-Mid-server-xxxx (Midtrans dashboard > Settings > Access Keys)
+  server-key: ${MIDTRANS_SERVER_KEY:}
+  snap-base-url: ${MIDTRANS_SNAP_URL:https://app.sandbox.midtrans.com}
+  api-base-url: ${MIDTRANS_API_URL:https://api.sandbox.midtrans.com}
+  max-attempts: 3
+  initial-backoff-ms: 300
+  connect-timeout-ms: 3000
+  read-timeout-ms: 10000
+
+reconciliation:
+  enabled: true
+  interval-ms: 60000
+  pending-older-than-minutes: 5
+  orphan-after-minutes: 60
+  batch-size: 50
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
